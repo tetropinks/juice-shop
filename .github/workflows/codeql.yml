@@ -70,3 +70,5 @@ jobs:
       uses: github/codeql-action/analyze@v2
     - name: Generate Security Report
       uses: peter-murray/github-security-report-action@v2
+      with:
+        token: ${{ secrets.SECREPORT_TOKEN }}
