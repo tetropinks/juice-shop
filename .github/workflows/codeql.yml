@@ -77,7 +77,7 @@ jobs:
         echo $RUNNER_TEMP
         echo $GITHUB_WORKSPACE
         echo $GITHUB_WORKFLOW
-        echo ${{env.base_directory}}
+        echo $HOME
     - name: Save CodeQL SARIF and pdf report
       uses: actions/upload-artifact@v3
       with:
