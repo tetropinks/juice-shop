@@ -6,7 +6,7 @@ on:
 
 jobs:
   zap_scan:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted 
     name: Scan Juice Shop preview instance on Heroku
     steps:
       - name: Check out Git repository
