@@ -68,4 +68,5 @@ jobs:
         ssh_key: ${{ secrets.REPO_DEPLOY_KEY }}
         name: hitchhaker
         email: dorest28@gmail.com
+        branch: develop
         clean_repo: false
