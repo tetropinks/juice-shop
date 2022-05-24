@@ -24,6 +24,8 @@ jobs:
   analyze:
     name: Analyze
     runs-on: self-hosted
+    env: 
+      HOME_DIR: $HOME
     permissions:
       actions: read
       contents: read
@@ -72,10 +74,12 @@ jobs:
       uses: peter-murray/github-security-report-action@v2
       with:
         token: ${{ secrets.SECREPORT_TOKEN }}
+    - name: Print HOME_DIR
+      run: echo $HOME_DIR
     - name: Save CodeQL SARIF and pdf report
       uses: actions/upload-artifact@v3
       with:
         name: scan-results
         path: |
-          $HOME/opt/github-actions-runners/juice-shop/_work/juice-shop/juice-shop/summary.pdf
-          $HOME/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
+          $HOME_DIR/opt/github-actions-runners/juice-shop/_work/juice-shop/juice-shop/summary.pdf
+          $HOME_DIR/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
