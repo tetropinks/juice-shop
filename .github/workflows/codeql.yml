@@ -72,16 +72,14 @@ jobs:
       uses: peter-murray/github-security-report-action@v2
       with:
         token: ${{ secrets.SECREPORT_TOKEN }}
-    - name: Print RUNNER_TEMP
+    - name: Print env vars
       run: | 
-        echo $RUNNER_TEMP
         echo $GITHUB_WORKSPACE
-        echo $GITHUB_WORKFLOW
-        echo $HOME
+        echo $PWD
     - name: Save CodeQL SARIF and pdf report
       uses: actions/upload-artifact@v3
       with:
         name: scan-results
         path: |
-          ${{ env.base_directory }}/juice-shop/summary.pdf
-          ${{ env.base_directory }}/results/
+          juice-shop/summary.pdf
+          results/
