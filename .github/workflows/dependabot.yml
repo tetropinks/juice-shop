@@ -1,0 +1,15 @@
+name: Dependabot fetch metadata
+on: 
+  push:
+  pull_request:
+
+jobs:
+  dependabot:
+    runs-on: self-hosted
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
