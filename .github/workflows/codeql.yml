@@ -77,5 +77,4 @@ jobs:
       with:
         name: scan-results
         path: |
-          /home/runner/work/juice-shop/juice-shop/summary.pdf
-          /home/runner/work/juice-shop/results/
+          $GITHUB_WORKSPACE/summary.pdf
