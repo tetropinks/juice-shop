@@ -72,10 +72,18 @@ jobs:
       uses: peter-murray/github-security-report-action@v2
       with:
         token: ${{ secrets.SECREPORT_TOKEN }}
-    - name: Save CodeQL SARIF and pdf report
+    - name: Save CodeQL SARIF report
       uses: actions/upload-artifact@v3
       with:
         name: scan-results
         path: |
-          ~/opt/github-actions-runners/juice-shop/_work/juice-shop/juice-shop/summary.pdf
           ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
+    - name: deploy changes to a repo
+      uses: tagus/git-deploy@v0.4.1
+      with:
+        changes: ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
+        repository: git@github.com:hitchhaker/artifactory.git
+        ssh_key: ${{ secrets.REPO_DEPLOY_KEY }}
+        name: hitchhaker
+        email: dorest28@gmail.com
+        clean_repo: false
