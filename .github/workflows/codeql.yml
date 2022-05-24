@@ -73,10 +73,13 @@ jobs:
       with:
         token: ${{ secrets.SECREPORT_TOKEN }}
     - name: Print RUNNER_TEMP
-      run: echo $RUNNER_TEMP
+      run: | 
+        echo $RUNNER_TEMP
+        echo $GITHUB_WORKSPACE
+        echo $GITHUB_WORKFLOW
     - name: Save CodeQL SARIF and pdf report
       uses: actions/upload-artifact@v3
       with:
         name: scan-results
         path: |
-          $RUNNER_TEMP/summary.pdf
+          $RUNNER_TEMP/../juice-shop/juice-shop/summary.pdf
