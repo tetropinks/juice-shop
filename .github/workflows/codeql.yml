@@ -1,9 +1,3 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
-#
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
-#
 # ******** NOTE ********
 # We have attempted to detect the languages in your repository. Please check
 # the `language` matrix defined below to confirm you have the correct set of
@@ -39,14 +33,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
@@ -54,14 +44,6 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
-
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 https://git.io/JvXDl
-
-    # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
-    #    and modify them (or add more) to build your code if your project
-    #    uses a compiled language
-
     #- run: |
     #   make bootstrap
     #   make release
@@ -78,7 +60,7 @@ jobs:
         name: scan-results
         path: |
           ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
-    - name: deploy changes to a repo
+    - name: Deploy changes to a repo
       uses: tagus/git-deploy@v0.4.1
       with:
         changes: ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
