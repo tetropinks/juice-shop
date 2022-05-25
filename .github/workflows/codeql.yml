@@ -64,13 +64,17 @@ jobs:
       run: |
         mkdir results
         mv ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif results/
-    - name: Publish Python SAST report to DefectDojo
+        subfolder="/opt/github-actions-runners/juice-shop/_work/juice-shop/juice-shop/results/"
+        report=$(ls results/)
+        fullpath="$HOME$subfolder$report"
+        echo $fullpath
+    - name: Publish report to DefectDojo
       id: import-scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
         token: ${{ secrets.DEFECTOJO_TOKEN }}
         defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-        file: results/*.sarif
+        file: results/${{ matrix.language }}.sarif
         scan_type: SARIF
         engagement: 1
     - name: Show response
