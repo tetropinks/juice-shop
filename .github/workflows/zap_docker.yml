@@ -16,9 +16,10 @@ jobs:
         with:
           ref: develop
       - name: ZAP Scan
+        continue-on-error: true
         run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://owasp-juice-shop-228.herokuapp.com -x report_xml.xml
       - name: Publish report to DefectDojo
-        if: always()
+        #if: always()
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
         with:
@@ -28,7 +29,7 @@ jobs:
           scan_type: ZAP Scan
           engagement: 1
       - name: Show response
-        if: always()
+        #if: always()
         run: |
           set -e
           printf '%s\n' '${{ steps.import-scan.outputs.response }}'
