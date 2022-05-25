@@ -16,8 +16,7 @@ jobs:
         with:
           ref: develop
       - name: ZAP Scan
-        run: |
-          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://owasp-juice-shop-228.herokuapp.com -x report_xml.xml
+        run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://owasp-juice-shop-228.herokuapp.com -x report_xml.xml
       - name: Move ZAP report to zap dir
         run: |
           mkdir zap
