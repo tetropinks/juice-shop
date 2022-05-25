@@ -59,14 +59,17 @@ jobs:
       with:
         name: scan-results
         path: |
-          ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
-    - name: Deploy changes to a repo
-      uses: tagus/git-deploy@v0.4.1
+          ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif
+    - name: Publish report to DefectDojo
+      id: import-scan
+      uses: ivanamat/defectdojo-import-scan@v1
       with:
-        changes: ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/
-        repository: git@github.com:hitchhaker/artifactory.git
-        ssh_key: ${{ secrets.REPO_DEPLOY_KEY }}
-        name: hitchhaker
-        email: dorest28@gmail.com
-        branch: develop
-        clean_repo: false
+        token: ${{ secrets.DEFECTOJO_TOKEN }}
+        defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+        file: ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif
+        scan_type: SARIF
+        engagement: 1
+    - name: Show response
+      run: |
+        set -e
+        printf '%s\n' '${{ steps.import-scan.outputs.response }}'
