@@ -63,7 +63,7 @@ jobs:
     - name: Move SARIF files to workspace dir
       run: |
         mkdir results
-        mv ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif results/
+        cp ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif results/
         subfolder="/opt/github-actions-runners/juice-shop/_work/juice-shop/juice-shop/results/"
         report=$(ls results/)
         fullpath="$HOME$subfolder$report"

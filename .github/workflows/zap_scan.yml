@@ -25,7 +25,8 @@ jobs:
       - name: Move ZAP report to zap dir
         run: |
           mkdir zap
-          mv report_json.json zap/report_json.json
+          cp report_json.json zap/
+          ls zap/
       - name: Publish report to DefectDojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
