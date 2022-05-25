@@ -22,3 +22,20 @@ jobs:
           target: 'http://owasp-juice-shop-228.herokuapp.com'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a -j'
+      - name: Move ZAP report to zap dir
+        run: |
+          mkdir zap
+          mv /home/zap/zap_out.json zap/zap_out.json
+      - name: Publish report to DefectDojo
+        id: import-scan
+        uses: ivanamat/defectdojo-import-scan@v1
+        with:
+          token: ${{ secrets.DEFECTOJO_TOKEN }}
+          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+          file: zap/zap_out.json
+          scan_type: ZAP Scan
+          engagement: 1
+      - name: Show response
+        run: |
+          set -e
+          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
