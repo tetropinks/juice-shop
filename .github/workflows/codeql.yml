@@ -64,15 +64,24 @@ jobs:
       run: |
         mkdir results
         mv ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif results/
-    - name: Publish report to DefectDojo
+    - name: Publish Python SAST report to DefectDojo
       id: import-scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
         token: ${{ secrets.DEFECTOJO_TOKEN }}
         defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-        file: results/*.sarif
+        file: results/python.sarif
         scan_type: SARIF
         engagement: 1
+    - name: Publish JS SAST report to DefectDojo
+      id: import-scan
+      uses: ivanamat/defectdojo-import-scan@v1
+      with:
+        token: ${{ secrets.DEFECTOJO_TOKEN }}
+        defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+        file: results/javascript.sarif
+        scan_type: SARIF
+        engagement: 2
     - name: Show response
       run: |
         set -e
