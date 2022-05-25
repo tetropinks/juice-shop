@@ -66,7 +66,7 @@ jobs:
       with:
         token: ${{ secrets.DEFECTOJO_TOKEN }}
         defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-        file: ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif
+        file: $HOME/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif
         scan_type: SARIF
         engagement: 1
     - name: Show response
