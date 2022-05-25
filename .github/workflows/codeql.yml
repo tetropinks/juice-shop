@@ -60,13 +60,17 @@ jobs:
         name: scan-results
         path: |
           ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif
+    - name: Move SARIF files to workspace dir
+      run: |
+        mkdir results
+        mv ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif results/
     - name: Publish report to DefectDojo
       id: import-scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
         token: ${{ secrets.DEFECTOJO_TOKEN }}
         defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-        file: $HOME/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif
+        file: *.sarif
         scan_type: SARIF
         engagement: 1
     - name: Show response
