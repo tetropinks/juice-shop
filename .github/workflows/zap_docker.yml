@@ -17,8 +17,7 @@ jobs:
           ref: develop
       - name: ZAP Scan
         run: |
-          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
-          -t http://owasp-juice-shop-228.herokuapp.com -x report_xml.xml
+          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://owasp-juice-shop-228.herokuapp.com -x report_xml.xml
       - name: Move ZAP report to zap dir
         run: |
           mkdir zap
@@ -30,7 +29,7 @@ jobs:
         with:
           token: ${{ secrets.DEFECTOJO_TOKEN }}
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-          file: zap/report_json.json
+          file: zap/report_xml.xml
           scan_type: ZAP Scan
           engagement: 1
       - name: Show response
