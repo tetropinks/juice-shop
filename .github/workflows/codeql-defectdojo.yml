@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: "CodeQL with DefectDojo integration"
 
 on:
   push:
@@ -59,3 +59,20 @@ jobs:
       run: |
         mkdir results
         cp ~/opt/github-actions-runners/juice-shop/_work/juice-shop/results/*.sarif results/
+        subfolder="/opt/github-actions-runners/juice-shop/_work/juice-shop/juice-shop/results/"
+        report=$(ls results/)
+        fullpath="$HOME$subfolder$report"
+        echo $fullpath
+    - name: Publish report to DefectDojo
+      id: import-scan
+      uses: ivanamat/defectdojo-import-scan@v1
+      with:
+        token: ${{ secrets.DEFECTOJO_TOKEN }}
+        defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+        file: results/${{ matrix.language }}.sarif
+        scan_type: SARIF
+        engagement: 1
+    - name: Show response
+      run: |
+        set -e
+        printf '%s\n' '${{ steps.import-scan.outputs.response }}'

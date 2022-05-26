@@ -1,0 +1,33 @@
+name: "ZAP Docker Scan"
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  zap_scan:
+    runs-on: self-hosted 
+    name: Scan Juice Shop preview instance on Heroku
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          ref: develop
+      - name: ZAP Scan
+        continue-on-error: true
+        run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://owasp-juice-shop-228.herokuapp.com -x report_xml.xml
+      - name: Publish report to DefectDojo
+        id: import-scan
+        uses: ivanamat/defectdojo-import-scan@v1
+        with:
+          token: ${{ secrets.DEFECTOJO_TOKEN }}
+          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+          file: report_xml.xml
+          scan_type: ZAP Scan
+          engagement: 1
+      - name: Show response
+        run: |
+          set -e
+          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
