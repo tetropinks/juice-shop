@@ -1,10 +1,8 @@
 name: "Dependency review scan"
 
 on:
-  push:
-    branches: [ develop, master ]
   pull_request:
-    branches: [ master ]
+    branches: [ develop, master ]
 
 permissions:
   contents: read
