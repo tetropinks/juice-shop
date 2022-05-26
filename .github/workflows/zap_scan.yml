@@ -26,17 +26,3 @@ jobs:
         run: |
           mkdir zap
           cp report_json.json zap/
-          ls zap/
-      - name: Publish report to DefectDojo
-        id: import-scan
-        uses: ivanamat/defectdojo-import-scan@v1
-        with:
-          token: ${{ secrets.DEFECTOJO_TOKEN }}
-          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-          file: zap/report_json.json
-          scan_type: ZAP Scan
-          engagement: 1
-      - name: Show response
-        run: |
-          set -e
-          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
